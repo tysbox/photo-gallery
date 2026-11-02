@@ -38,7 +38,21 @@ warn() { printf '  \033[33m!\033[0m %s\n' "$*"; }
 fail() { printf '  \033[31m✗\033[0m %s\n' "$*" >&2; }
 
 # Finder から起動した場合 PATH が最小になるため、よくある場所を補完する
-for p in "${HOME}/.nvm/versions/node"/*/bin "${HOME}/.volta/bin" "/opt/homebrew/bin" "/usr/local/bin"; do
+# （~/.local/bin や nvm など、ユーザー環境で一般的な場所を網羅的に追加）
+for p in \
+  "${HOME}/.local/bin" \
+  "${HOME}/.nvm/versions/node"/*/bin \
+  "${HOME}/.volta/bin" \
+  "${HOME}/.asdf/shims" \
+  "${HOME}/.rye/shims" \
+  "${HOME}/bin" \
+  "/opt/homebrew/bin" \
+  "/opt/homebrew/sbin" \
+  "/usr/local/bin" \
+  "/usr/bin" \
+  "/bin" \
+  "/usr/sbin" \
+  "/sbin"; do
   [ -d "${p}" ] && case ":${PATH}:" in *":${p}:"*) ;; *) PATH="${p}:${PATH}" ;; esac
 done
 export PATH
@@ -97,7 +111,9 @@ open_browser() {
   if [ "${PG_NO_OPEN:-0}" = "1" ]; then
     return 0
   fi
-  if ! osascript - "${BASE_URL}" <<'APPLESCRIPT'
+  # まず `open` を試す（自動化権限不要で確実）。失敗したら osascript で Safari を直接操作。
+  if ! open "${BASE_URL}" 2>/dev/null; then
+    osascript - "${BASE_URL}" <<'APPLESCRIPT' 2>/dev/null || true
 on run argv
   set siteURL to item 1 of argv
   tell application "Safari"
@@ -110,8 +126,6 @@ on run argv
   end tell
 end run
 APPLESCRIPT
-  then
-    open "${BASE_URL}"
   fi
   return 0
 }

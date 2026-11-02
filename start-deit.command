@@ -10,12 +10,21 @@
 # 失敗した場合はトラブルシューティングが容易なよう、
 # 終了コードとログファイルのパスを表示します。
 #
+set -uo pipefail
+
 cd "$(dirname "$0")" || exit 1
 
 LOG_FILE="${TMPDIR:-/tmp}/photo-gallery-start.log"
 
-bash ./scripts/start-editing.sh
-status=$?
+# ログファイルに開始時刻を記録
+{
+  echo "=== $(date '+%Y-%m-%d %H:%M:%S') 起動 ==="
+  echo "作業ディレクトリ: $(pwd)"
+  echo "PATH: ${PATH}"
+} >> "${LOG_FILE}"
+
+bash ./scripts/start-editing.sh 2>&1 | tee -a "${LOG_FILE}"
+status=${PIPESTATUS[0]}
 
 if [ "$status" -ne 0 ]; then
   {
