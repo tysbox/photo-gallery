@@ -1,0 +1,200 @@
+[
+  {
+    "id": "KYOTO-0001",
+    "title": "嵐山 渡月橋の薄霧",
+    "theme": "kyoto-landscape",
+    "collections": ["水辺・名勝", "嵐山・嵯峨野", "朝露"],
+    "location": {
+      "name": "渡月橋・大堰川",
+      "area": "右京区 嵐山"
+    },
+    "date": "2026-01",
+    "season": "冬",
+    "description": "早朝、嵐山の山懐から立ち込める深い川霧が大堰川を覆う。木造欄干の直線と幾重にも重なる青灰色の稜線が溶け合う幽玄の瞬間。",
+    "images": {
+      "thumbnail": "KYOTO-0001_thumb.webp",
+      "split": [
+        "KYOTO-0001_tl.webp",
+        "KYOTO-0001_tr.webp",
+        "KYOTO-0001_bl.webp",
+        "KYOTO-0001_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0002",
+    "title": "龍安寺 方丈石庭の静寂",
+    "theme": "kyoto-landscape",
+    "collections": ["禅・枯山水", "名刹", "陰翳"],
+    "location": {
+      "name": "大雲山 龍安寺 方丈",
+      "area": "右京区 龍安寺"
+    },
+    "date": "2026-02",
+    "season": "冬",
+    "description": "油土塀に囲まれた白砂の海。十五の巨石が織りなす無限の空間。雨上がりの澄んだ大気の中、濡れた苔と砂紋が微細な陰影を放つ。",
+    "images": {
+      "thumbnail": "KYOTO-0002_thumb.webp",
+      "split": [
+        "KYOTO-0002_tl.webp",
+        "KYOTO-0002_tr.webp",
+        "KYOTO-0002_bl.webp",
+        "KYOTO-0002_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0003",
+    "title": "鴨川 黄昏と先斗町の灯",
+    "theme": "kyoto-landscape",
+    "collections": ["水辺・名勝", "祇園・花街", "黄昏・夜景"],
+    "location": {
+      "name": "鴨川三条・先斗町",
+      "area": "中京区 先斗町"
+    },
+    "date": "2026-03",
+    "season": "春",
+    "description": "暮れなずむ鴨川の水面が藍色から茜色へと移ろう刻。先斗町の茶屋の軒先に吊るされた和紙の提灯が一つずつ温かな橙の光を灯し始める。",
+    "images": {
+      "thumbnail": "KYOTO-0003_thumb.webp",
+      "split": [
+        "KYOTO-0003_tl.webp",
+        "KYOTO-0003_tr.webp",
+        "KYOTO-0003_bl.webp",
+        "KYOTO-0003_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0004",
+    "title": "嵯峨野 竹林の小径 翠緑",
+    "theme": "kyoto-portrait",
+    "collections": ["嵐山・嵯峨野", "自然・竹林", "小径"],
+    "location": {
+      "name": "嵯峨野 竹林の道",
+      "area": "右京区 嵯峨小倉山"
+    },
+    "date": "2026-04",
+    "season": "春",
+    "description": "天を衝く数千本の青竹が風にそよぎ、木漏れ日が土の小径に斑文を描く。竹穂垣の端正な直線が視線を奥深くへと誘う。",
+    "images": {
+      "thumbnail": "KYOTO-0004_thumb.webp",
+      "split": [
+        "KYOTO-0004_tl.webp",
+        "KYOTO-0004_tr.webp",
+        "KYOTO-0004_bl.webp",
+        "KYOTO-0004_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0005",
+    "title": "伏見稲荷 千本鳥居の朱と影",
+    "theme": "kyoto-portrait",
+    "collections": ["寺社・祈り", "東山・伏見", "光と影"],
+    "location": {
+      "name": "伏見稲荷大社 奥社参道",
+      "area": "伏見区 深草"
+    },
+    "date": "2026-05",
+    "season": "春",
+    "description": "山道に連なる朱塗りの鳥居が作り出す神秘の回廊。木漏れ日が柱に落ち、鮮烈な朱と漆黒の台石、鬱蒼たる杉木立の影が交錯する。",
+    "images": {
+      "thumbnail": "KYOTO-0005_thumb.webp",
+      "split": [
+        "KYOTO-0005_tl.webp",
+        "KYOTO-0005_tr.webp",
+        "KYOTO-0005_bl.webp",
+        "KYOTO-0005_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0006",
+    "title": "祇園白川 雨情の石畳と柳",
+    "theme": "kyoto-portrait",
+    "collections": ["祇園・花街", "小径", "雨情"],
+    "location": {
+      "name": "祇園白川 巽橋周辺",
+      "area": "東山区 祇園元吉町"
+    },
+    "date": "2026-06",
+    "season": "夏",
+    "description": "雨に洗われて濡れ色を帯びた御影石の石畳。風に揺れる枝垂れ柳と、弁柄格子の町家の軒先から零れる和傘の水滴。",
+    "images": {
+      "thumbnail": "KYOTO-0006_thumb.webp",
+      "split": [
+        "KYOTO-0006_tl.webp",
+        "KYOTO-0006_tr.webp",
+        "KYOTO-0006_bl.webp",
+        "KYOTO-0006_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0007",
+    "title": "建仁寺 苔と白砂の波紋",
+    "theme": "kyoto-square",
+    "collections": ["禅・枯山水", "名刹", "侘び寂び"],
+    "location": {
+      "name": "建仁寺 大中院・潮音庭",
+      "area": "東山区 大和大路"
+    },
+    "date": "2026-09",
+    "season": "秋",
+    "description": "正方形の中に収まる円心の砂紋。深緑のビロードのような苔島に、はらりと落ちた一葉の紅葉。削ぎ落とされた空間が語る豊かな静寂。",
+    "images": {
+      "thumbnail": "KYOTO-0007_thumb.webp",
+      "split": [
+        "KYOTO-0007_tl.webp",
+        "KYOTO-0007_tr.webp",
+        "KYOTO-0007_bl.webp",
+        "KYOTO-0007_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0008",
+    "title": "冬景 金閣寺 冠雪と鏡湖池",
+    "theme": "kyoto-square",
+    "collections": ["寺社・名刹", "雪景色", "名勝"],
+    "location": {
+      "name": "鹿苑寺 (金閣寺) 鏡湖池",
+      "area": "北区 金閣寺町"
+    },
+    "date": "2026-01",
+    "season": "冬",
+    "description": "朝の数時間だけ見せる、白雪をいただいた舎利殿。澄み渡る寒気の中、鏡湖池の氷水に金箔と冠雪の屋根が逆さ富士のように揺らめく。",
+    "images": {
+      "thumbnail": "KYOTO-0008_thumb.webp",
+      "split": [
+        "KYOTO-0008_tl.webp",
+        "KYOTO-0008_tr.webp",
+        "KYOTO-0008_bl.webp",
+        "KYOTO-0008_br.webp"
+      ]
+    }
+  },
+  {
+    "id": "KYOTO-0009",
+    "title": "町家 坪庭の蹲踞と陰翳",
+    "theme": "kyoto-square",
+    "collections": ["町家・暮らし", "陰翳", "侘び寂び"],
+    "location": {
+      "name": "西陣 京町家奥庭",
+      "area": "上京区 西陣"
+    },
+    "date": "2026-10",
+    "season": "秋",
+    "description": "谷崎潤一郎『陰翳礼讃』の美学。奥まった坪庭の暗がりに据えられた手水鉢と竹の筧。かすかな水滴の波紋と、落ちた椿の花が仄暗い光を宿す。",
+    "images": {
+      "thumbnail": "KYOTO-0009_thumb.webp",
+      "split": [
+        "KYOTO-0009_tl.webp",
+        "KYOTO-0009_tr.webp",
+        "KYOTO-0009_bl.webp",
+        "KYOTO-0009_br.webp"
+      ]
+    }
+  }
+]

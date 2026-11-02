@@ -1,0 +1,8 @@
+{
+  "name": "VIDE SIGNIFIANT — Kyoto Photo Archive & Studio",
+  "description": "京都写真アーカイブ「VIDE SIGNIFIANT」の作品展示・4分割画像保護プレビュー・テーマと作品の編集管理スタジオ",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

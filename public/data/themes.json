@@ -1,0 +1,17 @@
+[
+  {
+    "id": "kyoto-landscape",
+    "title": "幽玄の景 — Landscapes of Kyoto",
+    "format": "landscape"
+  },
+  {
+    "id": "kyoto-portrait",
+    "title": "静寂の路 — Vertical Serenity",
+    "format": "portrait"
+  },
+  {
+    "id": "kyoto-square",
+    "title": "枯淡と陰翳 — Wabi-sabi & Shadows",
+    "format": "square"
+  }
+]
