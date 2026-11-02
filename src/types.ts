@@ -35,6 +35,11 @@ export interface Photo {
     shutter?: string;
     iso?: string;
   };
+  framing?: {
+    matColor: MatColor;
+    frameBorder: FrameBorder;
+    matPadding?: 'normal' | 'wide' | 'compact';
+  };
   copyright?: string;
   creator?: string;
   images: {

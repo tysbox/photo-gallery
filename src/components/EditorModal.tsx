@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import type { Photo, Theme, Format } from '../types';
+import type { Photo, Theme, Format, MatColor, FrameBorder } from '../types';
 import { FORMAT_DIMENSIONS } from '../types';
 import { processUploadedImage, generatePhotoTiles } from '../lib/kyotoArtworkGenerator';
 import { extractExifFromFile, ExtractedExif } from '../lib/exifExtractor';
 import { imageUrl } from '../lib/imageUrl';
-import { Upload, X, Check, AlertCircle, RefreshCw, Eye, Camera, Sparkles } from 'lucide-react';
+import { Upload, X, Check, AlertCircle, RefreshCw, Eye, Camera, Sparkles, Tag, Plus } from 'lucide-react';
 
 interface EditorModalProps {
   isOpen: boolean;
@@ -13,6 +13,7 @@ interface EditorModalProps {
   initialPhoto?: Photo | null;
   themes: Theme[];
   existingIds: string[];
+  allAvailableTags?: string[];
 }
 
 export function EditorModal({
@@ -22,6 +23,7 @@ export function EditorModal({
   initialPhoto,
   themes,
   existingIds,
+  allAvailableTags = [],
 }: EditorModalProps) {
   const isEditing = Boolean(initialPhoto);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,7 +33,8 @@ export function EditorModal({
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [theme, setTheme] = useState('');
-  const [collectionsStr, setCollectionsStr] = useState('');
+  const [collections, setCollections] = useState<string[]>([]);
+  const [newTagInput, setNewTagInput] = useState('');
   const [locName, setLocName] = useState('');
   const [locArea, setLocArea] = useState('');
   const [locCoords, setLocCoords] = useState('');
@@ -39,6 +42,11 @@ export function EditorModal({
   const [season, setSeason] = useState<Photo['season']>('春');
   const [description, setDescription] = useState('');
   const [curatorNotes, setCuratorNotes] = useState('');
+
+  // Framing specification (decided by creator)
+  const [matColor, setMatColor] = useState<MatColor>('mat-karegane');
+  const [frameBorder, setFrameBorder] = useState<FrameBorder>('frame-oak');
+  const [matPadding, setMatPadding] = useState<'normal' | 'wide' | 'compact'>('normal');
 
   // Camera info
   const [camera, setCamera] = useState('');
@@ -66,7 +74,8 @@ export function EditorModal({
       setTitle(initialPhoto.title);
       setSubtitle(initialPhoto.subtitle || '');
       setTheme(initialPhoto.theme);
-      setCollectionsStr(initialPhoto.collections.join(', '));
+      setCollections([...initialPhoto.collections]);
+      setNewTagInput('');
       setLocName(initialPhoto.location.name);
       setLocArea(initialPhoto.location.area);
       setLocCoords(initialPhoto.location.coordinates || '');
@@ -77,6 +86,9 @@ export function EditorModal({
       setThumbnailUrl(initialPhoto.images.thumbnail);
       setSplitUrls(initialPhoto.images.split);
       setMasterUrl(initialPhoto.images.master || '');
+      setMatColor(initialPhoto.framing?.matColor || 'mat-karegane');
+      setFrameBorder(initialPhoto.framing?.frameBorder || 'frame-oak');
+      setMatPadding(initialPhoto.framing?.matPadding || 'normal');
       setCamera(initialPhoto.cameraInfo?.camera || '');
       setLens(initialPhoto.cameraInfo?.lens || '');
       setFocalLength(initialPhoto.cameraInfo?.focalLength || '');
@@ -92,7 +104,8 @@ export function EditorModal({
       setTitle('');
       setSubtitle('');
       setTheme(themes[0]?.id || 'kyoto-landscape');
-      setCollectionsStr('寺社・名刹, 陰翳');
+      setCollections(['寺社・名刹', '陰翳']);
+      setNewTagInput('');
       setLocName('京都');
       setLocArea('東山区');
       setLocCoords('');
@@ -103,6 +116,9 @@ export function EditorModal({
       setThumbnailUrl('');
       setSplitUrls(['', '', '', '']);
       setMasterUrl('');
+      setMatColor('mat-karegane');
+      setFrameBorder('frame-oak');
+      setMatPadding('normal');
       setCamera('Leica SL2');
       setLens('50mm');
       setFocalLength('50mm');
@@ -179,6 +195,19 @@ export function EditorModal({
     }
   };
 
+  const handleAddTag = (tagToAdd: string) => {
+    const trimmed = tagToAdd.trim();
+    if (!trimmed) return;
+    if (!collections.includes(trimmed)) {
+      setCollections([...collections, trimmed]);
+    }
+    setNewTagInput('');
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setCollections(collections.filter((t) => t !== tagToRemove));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !id.trim()) {
@@ -186,10 +215,7 @@ export function EditorModal({
       return;
     }
 
-    const collections = collectionsStr
-      .split(/[,、]/)
-      .map((s) => s.trim())
-      .filter(Boolean);
+    const finalCollections = collections.filter(Boolean);
 
     // If split images are empty, fallback to generated placeholder
     const finalSplit = splitUrls[0]
@@ -207,7 +233,7 @@ export function EditorModal({
       title: title.trim(),
       subtitle: subtitle.trim() || undefined,
       theme,
-      collections: collections.length ? collections : ['京都'],
+      collections: finalCollections.length ? finalCollections : ['京都'],
       location: {
         name: locName.trim() || '京都',
         area: locArea.trim() || '京都市',
@@ -217,6 +243,11 @@ export function EditorModal({
       season,
       description: description.trim() || '静寂に満ちた京都の情景。',
       curatorNotes: curatorNotes.trim() || undefined,
+      framing: {
+        matColor,
+        frameBorder,
+        matPadding,
+      },
       cameraInfo: {
         camera: camera.trim() || undefined,
         lens: lens.trim() || undefined,
@@ -573,17 +604,212 @@ export function EditorModal({
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-[#6f6d67] uppercase tracking-wider mb-1">
-              コレクション / 絞り込みタグ (カンマ区切り)
-            </label>
-            <input
-              type="text"
-              value={collectionsStr}
-              onChange={(e) => setCollectionsStr(e.target.value)}
-              className="w-full text-sm bg-white border border-[#2a2926]/30 rounded p-2 focus:border-[#23221f] focus:outline-none"
-              placeholder="寺社・名刹, 侘び寂び, 陰翳, 雨情"
-            />
+          {/* Section 3.5: Collection Labels Management */}
+          <div className="p-4 bg-white/70 border border-[#2a2926]/20 rounded space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-[#23221f] uppercase tracking-wider flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-[#23221f]" />
+                絞り込みラベル・コレクション (Labels)
+              </label>
+              <span className="text-[11px] text-[#6f6d67]">
+                鑑賞者がギャラリーで絞り込みに使用するタグ
+              </span>
+            </div>
+
+            {/* Current Selected Label Chips */}
+            <div className="flex flex-wrap gap-1.5 min-h-[32px] p-2 bg-white border border-[#2a2926]/20 rounded">
+              {collections.length === 0 ? (
+                <span className="text-xs text-[#6f6d67] italic p-0.5">
+                  ラベルが設定されていません（下の候補または新規追加から付与してください）
+                </span>
+              ) : (
+                collections.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#23221f] text-[#f6f6f3] text-xs rounded-full font-serif"
+                  >
+                    <span>{tag}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveTag(tag)}
+                      className="hover:text-red-300 ml-0.5"
+                      title="ラベルを外す"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                ))
+              )}
+            </div>
+
+            {/* Candidate labels from archive */}
+            {allAvailableTags.filter((t) => !collections.includes(t)).length > 0 && (
+              <div className="space-y-1">
+                <span className="text-[11px] text-[#6f6d67] block">
+                  既存のアーカイブ候補からワンクリックで追加:
+                </span>
+                <div className="flex flex-wrap gap-1">
+                  {allAvailableTags
+                    .filter((t) => !collections.includes(t))
+                    .map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => handleAddTag(tag)}
+                        className="text-[11px] px-2.5 py-0.5 bg-[#edeae4] hover:bg-[#23221f] hover:text-[#f6f6f3] text-[#23221f] border border-[#2a2926]/20 rounded-full font-serif transition-colors flex items-center gap-1"
+                      >
+                        <Plus className="w-2.5 h-2.5" />
+                        <span>{tag}</span>
+                      </button>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* Create new label input */}
+            <div className="flex items-center gap-2 pt-1">
+              <input
+                type="text"
+                value={newTagInput}
+                onChange={(e) => setNewTagInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddTag(newTagInput);
+                  }
+                }}
+                placeholder="新しいラベル名を入力（例: 枯山水, 嵐山, 陰翳...）"
+                className="flex-1 text-xs bg-white border border-[#2a2926]/30 rounded p-1.5 focus:border-[#23221f] focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => handleAddTag(newTagInput)}
+                className="px-3 py-1.5 bg-[#edeae4] hover:bg-[#23221f] hover:text-[#f6f6f3] text-[#23221f] border border-[#2a2926]/30 text-xs rounded transition-colors flex items-center gap-1"
+              >
+                <Plus className="w-3 h-3" />
+                <span>追加</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Section 3.6: Creator Framing Specifications */}
+          <div className="p-4 bg-white/70 border border-[#2a2926]/20 rounded space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <span className="font-serif text-xs font-bold text-[#23221f] uppercase tracking-wider">
+                製作者による額装仕様の指定 (Framing Specifications)
+              </span>
+              <span className="text-[11px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                鑑賞者画面では固定表示（鑑賞者は変更不可）
+              </span>
+            </div>
+            <p className="text-[11px] text-[#6f6d67] leading-relaxed">
+              額装（木材仕上げ）と台紙（マット色）は作品の佇まいを決定づける製作者の演出です。鑑賞者（一般来訪者）による改変を防ぐため、ここで指定された仕様で固定されます。
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* Mat color choice */}
+              <div>
+                <label className="block text-xs font-semibold text-[#6f6d67] mb-2 font-serif">
+                  台紙マット色
+                </label>
+                <div className="space-y-1.5">
+                  {(
+                    [
+                      { id: 'mat-karegane', label: '枯れ金 (Aged Gold)', bg: '#bfa776' },
+                      { id: 'mat-wamurasaki', label: '和紫 (Deep Violet)', bg: '#2a1b2d' },
+                      { id: 'mat-washi', label: '和紙 (Ecru)', bg: '#f6f6f3' },
+                      { id: 'mat-charcoal', label: '墨 (Sumi)', bg: '#1e1d1b' },
+                      { id: 'mat-indigo', label: '藍 (Indigo)', bg: '#141b24' },
+                    ] as const
+                  ).map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => setMatColor(m.id)}
+                      className={`w-full text-left px-2.5 py-1.5 rounded border text-xs flex items-center justify-between transition-all ${
+                        matColor === m.id
+                          ? 'border-[#23221f] bg-white font-medium shadow-sm ring-1 ring-[#23221f]'
+                          : 'border-[#2a2926]/20 bg-[#f9f8f6] hover:bg-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="w-3.5 h-3.5 rounded-full border border-black/25 shrink-0"
+                          style={{ backgroundColor: m.bg }}
+                        />
+                        <span className="font-serif">{m.label}</span>
+                      </div>
+                      {matColor === m.id && <Check className="w-3.5 h-3.5 text-[#23221f]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Frame wood finish */}
+              <div>
+                <label className="block text-xs font-semibold text-[#6f6d67] mb-2 font-serif">
+                  額縁仕様 (Frame Border)
+                </label>
+                <div className="space-y-1.5">
+                  {(
+                    [
+                      { id: 'frame-oak', label: 'Antique Oak Wood (古材オーク)' },
+                      { id: 'frame-charcoal', label: '煤竹 (Muted Charcoal)' },
+                      { id: 'frame-ebony', label: '黒檀 (Ebony Black)' },
+                      { id: 'frame-hinoki', label: '檜木 (Natural Hinoki)' },
+                      { id: 'frame-float', label: '浮かし (Minimal Float)' },
+                    ] as const
+                  ).map((f) => (
+                    <button
+                      key={f.id}
+                      type="button"
+                      onClick={() => setFrameBorder(f.id)}
+                      className={`w-full text-left px-2.5 py-1.5 rounded border text-xs flex items-center justify-between transition-all ${
+                        frameBorder === f.id
+                          ? 'border-[#23221f] bg-white font-medium shadow-sm ring-1 ring-[#23221f]'
+                          : 'border-[#2a2926]/20 bg-[#f9f8f6] hover:bg-white'
+                      }`}
+                    >
+                      <span className="font-serif">{f.label}</span>
+                      {frameBorder === f.id && <Check className="w-3.5 h-3.5 text-[#23221f]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mat padding */}
+              <div>
+                <label className="block text-xs font-semibold text-[#6f6d67] mb-2 font-serif">
+                  台紙の余白
+                </label>
+                <div className="space-y-1.5">
+                  {(
+                    [
+                      { id: 'normal', label: '標準余白 (バランス)', desc: '作品と額縁の調和' },
+                      { id: 'wide', label: '広め (ゆったり)', desc: '美術館のような余白感' },
+                      { id: 'compact', label: '小余白 (コンパクト)', desc: '作品そのものを前面に' },
+                    ] as const
+                  ).map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setMatPadding(p.id)}
+                      className={`w-full text-left px-2.5 py-2 rounded border text-xs flex items-center justify-between transition-all ${
+                        matPadding === p.id
+                          ? 'border-[#23221f] bg-white font-medium shadow-sm ring-1 ring-[#23221f]'
+                          : 'border-[#2a2926]/20 bg-[#f9f8f6] hover:bg-white'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif block">{p.label}</span>
+                        <span className="text-[10px] text-[#6f6d67] block mt-0.5">{p.desc}</span>
+                      </div>
+                      {matPadding === p.id && <Check className="w-3.5 h-3.5 text-[#23221f]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Section 4: Descriptions */}

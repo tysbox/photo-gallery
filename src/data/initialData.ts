@@ -41,6 +41,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '早朝、嵐山の山懐から立ち込める深い川霧が大堰川を覆う。木造欄干の直線と幾重にも重なる青灰色の稜線が溶け合う幽玄の瞬間。',
     curatorNotes: '16:9の横構図が朝霧の水平方向の漂いと静けさを引き立てる。',
+    framing: {
+      matColor: 'mat-karegane',
+      frameBorder: 'frame-oak',
+      matPadding: 'normal',
+    },
     cameraInfo: {
       camera: 'Leica SL2',
       lens: 'Apo-Vario-Elmarit-SL 24-90mm f/2.8-4',
@@ -77,6 +82,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '油土塀に囲まれた白砂の海。十五の巨石が織りなす無限の空間。雨上がりの澄んだ大気の中、濡れた苔と砂紋が微細な陰影を放つ。',
     curatorNotes: '水平の油土塀の経年による染みと、幾何学的な白砂の対比。',
+    framing: {
+      matColor: 'mat-washi',
+      frameBorder: 'frame-charcoal',
+      matPadding: 'wide',
+    },
     cameraInfo: {
       camera: 'Hasselblad 907X 50C',
       lens: 'XCD 45mm f/4 P',
@@ -113,6 +123,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '暮れなずむ鴨川の水面が藍色から茜色へと移ろう刻。先斗町の茶屋の軒先に吊るされた和紙の提灯が一つずつ温かな橙の光を灯し始める。',
     curatorNotes: '水流の動と、川床の静謐な灯りの対比を捉えた一枚。',
+    framing: {
+      matColor: 'mat-indigo',
+      frameBorder: 'frame-oak',
+      matPadding: 'normal',
+    },
     cameraInfo: {
       camera: 'Sony α7R V',
       lens: 'FE 50mm f/1.2 GM',
@@ -149,6 +164,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '天を衝く数千本の青竹が風にそよぎ、木漏れ日が土の小径に斑文を描く。竹穂垣の端正な直線が視線を奥深くへと誘う。',
     curatorNotes: '3:4の縦長フォーマットが生む垂直の伸びやかさと清涼感。',
+    framing: {
+      matColor: 'mat-karegane',
+      frameBorder: 'frame-hinoki',
+      matPadding: 'normal',
+    },
     cameraInfo: {
       camera: 'Fujifilm GFX 100 II',
       lens: 'GF 45-100mm f/4 R LM OIS WR',
@@ -185,6 +205,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '山道に連なる朱塗りの鳥居が作り出す神秘の回廊。木漏れ日が柱に落ち、鮮烈な朱と漆黒の台石、鬱蒼たる杉木立の影が交錯する。',
     curatorNotes: '連続する鳥居の遠近法と、柱の黒漆のアクセント。',
+    framing: {
+      matColor: 'mat-wamurasaki',
+      frameBorder: 'frame-ebony',
+      matPadding: 'normal',
+    },
     cameraInfo: {
       camera: 'Nikon Z8',
       lens: 'NIKKOR Z 35mm f/1.8 S',
@@ -221,6 +246,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '雨に洗われて濡れ色を帯びた御影石の石畳。風に揺れる枝垂れ柳と、弁柄格子の町家の軒先から零れる和傘の水滴。',
     curatorNotes: '雨の反射によって引き出される石畳のきめ細かなテクスチャ。',
+    framing: {
+      matColor: 'mat-charcoal',
+      frameBorder: 'frame-charcoal',
+      matPadding: 'normal',
+    },
     cameraInfo: {
       camera: 'Leica M11-P',
       lens: 'Summilux-M 35mm f/1.4 ASPH.',
@@ -257,6 +287,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '正方形の中に収まる円心の砂紋。深緑のビロードのような苔島に、はらりと落ちた一葉の紅葉。削ぎ落とされた空間が語る豊かな静寂。',
     curatorNotes: '1:1の正方フォーマットが砂紋の求心力と静謐さを強調。',
+    framing: {
+      matColor: 'mat-karegane',
+      frameBorder: 'frame-oak',
+      matPadding: 'wide',
+    },
     cameraInfo: {
       camera: 'Hasselblad X2D 100C',
       lens: 'XCD 55mm f/2.5 V',
@@ -293,6 +328,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '朝の数時間だけ見せる、白雪をいただいた舎利殿。澄み渡る寒気の中、鏡湖池の氷水に金箔と冠雪の屋根が逆さ富士のように揺らめく。',
     curatorNotes: '純白の雪と黄金の箔、暗色の池面の端正な正方形構成。',
+    framing: {
+      matColor: 'mat-wamurasaki',
+      frameBorder: 'frame-oak',
+      matPadding: 'normal',
+    },
     cameraInfo: {
       camera: 'Sony α1',
       lens: 'FE 70-200mm f/2.8 GM OSS II',
@@ -329,6 +369,11 @@ export const INITIAL_PHOTOS: Photo[] = [
     description:
       '谷崎潤一郎『陰翳礼讃』の美学。奥まった坪庭の暗がりに据えられた手水鉢と竹の筧。かすかな水滴の波紋と、落ちた椿の花が仄暗い光を宿す。',
     curatorNotes: '深い黒のグラデーションの中に潜む微妙な質感。',
+    framing: {
+      matColor: 'mat-charcoal',
+      frameBorder: 'frame-ebony',
+      matPadding: 'compact',
+    },
     cameraInfo: {
       camera: 'Leica M11 Monochrom',
       lens: 'Noctilux-M 50mm f/1.2 ASPH.',
