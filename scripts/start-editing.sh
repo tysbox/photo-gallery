@@ -56,7 +56,11 @@ info "作業ディレクトリ: ${REPO_ROOT}"
 # ---------------------------------------------------------------------------
 if [ ! -d node_modules ] || ! npm ls --depth=0 >/dev/null 2>&1; then
   info "依存パッケージをインストールします…"
-  if npm install && npm ls --depth=0 >/dev/null 2>&1; then
+  # このプロジェクトは bun.lock ベースで、esbuild の peer 依存が競合するため
+  # --legacy-peer-deps で解決する（なければ素の install を試す）
+  if npm install --legacy-peer-deps && npm ls --depth=0 >/dev/null 2>&1; then
+    info "依存パッケージをインストールしました ✓"
+  elif npm install && npm ls --depth=0 >/dev/null 2>&1; then
     info "依存パッケージをインストールしました ✓"
   else
     fail "npm install に失敗しました。ログを確認してください。"
