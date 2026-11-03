@@ -98,7 +98,6 @@ export default function App() {
   const [matColor, setMatColor] = useState<MatColor>('mat-washi');
   const [frameBorder, setFrameBorder] = useState<FrameBorder>('frame-susutake');
   const [matPadding, setMatPadding] = useState<MatPadding>('normal');
-  const [doubleFrameWidth, setDoubleFrameWidth] = useState<boolean>(false);
 
   // Modal states
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
@@ -212,7 +211,6 @@ export default function App() {
       setMatColor(currentPhoto.framing.matColor);
       setFrameBorder(currentPhoto.framing.frameBorder);
       setMatPadding(currentPhoto.framing.matPadding || 'normal');
-      setDoubleFrameWidth(currentPhoto.framing.doubleFrameWidth || false);
     }
   }, [currentPhoto?.id]);
 
@@ -523,7 +521,6 @@ export default function App() {
                 matColor={isCuratorMode ? matColor : (currentPhoto.framing?.matColor ?? 'mat-karegane')}
                 frameBorder={isCuratorMode ? frameBorder : (currentPhoto.framing?.frameBorder ?? 'frame-oak')}
                 matPadding={isCuratorMode ? matPadding : (currentPhoto.framing?.matPadding ?? 'normal')}
-                doubleFrameWidth={isCuratorMode ? doubleFrameWidth : (currentPhoto.framing?.doubleFrameWidth ?? false)}
                 showSeamDiagnostic={false}
               />
             </div>
@@ -1102,7 +1099,6 @@ export default function App() {
                       matColor={filteredPhotos[activeSlideIndex].framing?.matColor ?? 'mat-karegane'}
                       frameBorder={filteredPhotos[activeSlideIndex].framing?.frameBorder ?? 'frame-oak'}
                       matPadding={filteredPhotos[activeSlideIndex].framing?.matPadding ?? 'normal'}
-                      doubleFrameWidth={filteredPhotos[activeSlideIndex].framing?.doubleFrameWidth ?? false}
                     />
                   </div>
 

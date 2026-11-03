@@ -47,7 +47,6 @@ export function EditorModal({
   const [matColor, setMatColor] = useState<MatColor>('mat-karegane');
   const [frameBorder, setFrameBorder] = useState<FrameBorder>('frame-oak');
   const [matPadding, setMatPadding] = useState<MatPadding>('normal');
-  const [doubleFrameWidth, setDoubleFrameWidth] = useState<boolean>(false);
 
   // Camera info
   const [camera, setCamera] = useState('');
@@ -90,7 +89,6 @@ export function EditorModal({
       setMatColor(initialPhoto.framing?.matColor || 'mat-karegane');
       setFrameBorder(initialPhoto.framing?.frameBorder || 'frame-oak');
       setMatPadding(initialPhoto.framing?.matPadding || 'normal');
-      setDoubleFrameWidth(initialPhoto.framing?.doubleFrameWidth || false);
       setCamera(initialPhoto.cameraInfo?.camera || '');
       setLens(initialPhoto.cameraInfo?.lens || '');
       setFocalLength(initialPhoto.cameraInfo?.focalLength || '');
@@ -121,7 +119,6 @@ export function EditorModal({
       setMatColor('mat-karegane');
       setFrameBorder('frame-oak');
       setMatPadding('normal');
-      setDoubleFrameWidth(false);
       setCamera('Leica SL2');
       setLens('50mm');
       setFocalLength('50mm');
@@ -250,7 +247,6 @@ export function EditorModal({
         matColor,
         frameBorder,
         matPadding,
-        doubleFrameWidth,
       },
       cameraInfo: {
         camera: camera.trim() || undefined,
@@ -791,7 +787,7 @@ export function EditorModal({
                 <div className="space-y-1.5">
                   {(
                     [
-                      { id: 'none', label: '無 (枠のみ)', desc: '台紙なし・額縁が作品を直接囲む' },
+                      { id: 'none', label: '無 (枠のみ)', desc: '台紙なし・額縁幅2倍で作品を直接囲む' },
                       { id: 'normal', label: '標準余白 (バランス)', desc: '作品と額縁の調和' },
                       { id: 'wide', label: '広め (ゆったり)', desc: '美術館のような余白感' },
                       { id: 'compact', label: '小余白 (コンパクト)', desc: '作品そのものを前面に' },
@@ -815,24 +811,6 @@ export function EditorModal({
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Double frame width toggle */}
-              <div className="pt-2 border-t border-[#2a2926]/10">
-                <label className="flex items-center gap-2.5 cursor-pointer group">
-                  <input
-                    type="checkbox"
-                    checked={doubleFrameWidth}
-                    onChange={(e) => setDoubleFrameWidth(e.target.checked)}
-                    className="w-4 h-4 accent-[#23221f] cursor-pointer"
-                  />
-                  <span className="text-xs font-serif text-[#23221f] group-hover:text-black">
-                    枠幅を2倍にする
-                  </span>
-                  <span className="text-[10px] text-[#6f6d67]">
-                    （額縁を太く強調）
-                  </span>
-                </label>
               </div>
             </div>
           </div>

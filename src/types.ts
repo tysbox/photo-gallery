@@ -39,8 +39,6 @@ export interface Photo {
     matColor: MatColor;
     frameBorder: FrameBorder;
     matPadding?: MatPadding;
-    /** 枠幅を2倍にする（額縁を太く強調） */
-    doubleFrameWidth?: boolean;
   };
   copyright?: string;
   creator?: string;

@@ -7,8 +7,6 @@ interface FrameProps {
   matColor?: MatColor;
   frameBorder?: FrameBorder;
   matPadding?: MatPadding;
-  /** 枠幅を2倍にする（額縁を太く強調） */
-  doubleFrameWidth?: boolean;
   showSeamDiagnostic?: boolean;
   zoomLevel?: number;
   onTileClick?: (tileIndex: number, tileName: string) => void;
@@ -62,6 +60,16 @@ const FRAME_CLASSES: Record<FrameBorder, string> = {
   'frame-float': 'shadow-xl p-0',
 };
 
+// 台紙余白「無」の際の額縁: 各素材の枠幅を2倍にする
+const FRAME_DOUBLE_CLASSES: Record<FrameBorder, string> = {
+  'frame-ebony': 'p-3 ring-2',
+  'frame-hinoki': 'p-3 ring-2',
+  'frame-oak': 'p-3 ring-2',
+  'frame-susutake': 'p-2 ring-2',
+  'frame-shunuri': 'p-3 ring-2',
+  'frame-float': 'p-0',
+};
+
 const PADDING_CLASSES: Record<MatPadding, string> = {
   none: 'p-0',
   compact: 'p-4 sm:p-6',
@@ -75,15 +83,14 @@ export function Frame({
   matColor = 'mat-washi',
   frameBorder = 'frame-susutake',
   matPadding = 'normal',
-  doubleFrameWidth = false,
   showSeamDiagnostic = false,
   zoomLevel = 1,
   onTileClick,
 }: FrameProps) {
   const currentMat = MAT_CLASSES[matColor];
   const frameClass = FRAME_CLASSES[frameBorder];
-  // 枠幅2倍: 額縁のパディングとリングを太くする
-  const widthScale = doubleFrameWidth ? 'p-3 ring-[3px]' : '';
+  // 台紙余白「無」の際は額縁の枠幅が2倍になる
+  const widthScale = matPadding === 'none' ? FRAME_DOUBLE_CLASSES[frameBorder] : '';
 
   return (
     <figure className="m-0 inline-flex flex-col gap-4 max-w-full">
