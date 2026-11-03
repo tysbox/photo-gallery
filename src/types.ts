@@ -38,7 +38,9 @@ export interface Photo {
   framing?: {
     matColor: MatColor;
     frameBorder: FrameBorder;
-    matPadding?: 'normal' | 'wide' | 'compact';
+    matPadding?: MatPadding;
+    /** 枠幅を2倍にする（額縁を太く強調） */
+    doubleFrameWidth?: boolean;
   };
   copyright?: string;
   creator?: string;
@@ -65,5 +67,18 @@ export const FORMAT_DIMENSIONS: Record<
   square: { w: 960, h: 960, ratio: '1:1', label: '正方形 (1:1)', aspectDecimal: 1.0 },
 };
 
-export type MatColor = 'mat-washi' | 'mat-charcoal' | 'mat-karegane' | 'mat-indigo' | 'mat-wamurasaki';
-export type FrameBorder = 'frame-ebony' | 'frame-hinoki' | 'frame-oak' | 'frame-charcoal' | 'frame-float';
+export type MatColor =
+  | 'mat-washi'
+  | 'mat-charcoal'
+  | 'mat-karegane'
+  | 'mat-indigo'
+  | 'mat-wamurasaki'
+  | 'mat-kurenai';
+export type FrameBorder =
+  | 'frame-ebony'
+  | 'frame-hinoki'
+  | 'frame-oak'
+  | 'frame-susutake'
+  | 'frame-shunuri'
+  | 'frame-float';
+export type MatPadding = 'none' | 'compact' | 'normal' | 'wide';

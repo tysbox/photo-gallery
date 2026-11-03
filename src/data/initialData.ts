@@ -84,7 +84,7 @@ export const INITIAL_PHOTOS: Photo[] = [
     curatorNotes: '水平の油土塀の経年による染みと、幾何学的な白砂の対比。',
     framing: {
       matColor: 'mat-washi',
-      frameBorder: 'frame-charcoal',
+      frameBorder: 'frame-susutake',
       matPadding: 'wide',
     },
     cameraInfo: {
@@ -248,7 +248,7 @@ export const INITIAL_PHOTOS: Photo[] = [
     curatorNotes: '雨の反射によって引き出される石畳のきめ細かなテクスチャ。',
     framing: {
       matColor: 'mat-charcoal',
-      frameBorder: 'frame-charcoal',
+      frameBorder: 'frame-susutake',
       matPadding: 'normal',
     },
     cameraInfo: {

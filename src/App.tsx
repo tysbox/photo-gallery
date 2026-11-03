@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import type { Photo, Theme, Format, MatColor, FrameBorder } from './types';
+import type { Photo, Theme, Format, MatColor, FrameBorder, MatPadding } from './types';
 import { FORMAT_DIMENSIONS } from './types';
 import { INITIAL_PHOTOS, INITIAL_THEMES } from './data/initialData';
 import { Frame } from './components/Frame';
@@ -96,8 +96,9 @@ export default function App() {
 
   // Framing display preferences
   const [matColor, setMatColor] = useState<MatColor>('mat-washi');
-  const [frameBorder, setFrameBorder] = useState<FrameBorder>('frame-charcoal');
-  const [matPadding, setMatPadding] = useState<'normal' | 'wide' | 'compact'>('normal');
+  const [frameBorder, setFrameBorder] = useState<FrameBorder>('frame-susutake');
+  const [matPadding, setMatPadding] = useState<MatPadding>('normal');
+  const [doubleFrameWidth, setDoubleFrameWidth] = useState<boolean>(false);
 
   // Modal states
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
@@ -211,6 +212,7 @@ export default function App() {
       setMatColor(currentPhoto.framing.matColor);
       setFrameBorder(currentPhoto.framing.frameBorder);
       setMatPadding(currentPhoto.framing.matPadding || 'normal');
+      setDoubleFrameWidth(currentPhoto.framing.doubleFrameWidth || false);
     }
   }, [currentPhoto?.id]);
 
@@ -447,10 +449,11 @@ export default function App() {
                       {(
                         [
                           { id: 'mat-karegane', label: '枯れ金', bg: '#bfa776' },
-                          { id: 'mat-wamurasaki', label: '和紫', bg: '#2a1b2d' },
+                          { id: 'mat-wamurasaki', label: '和紫', bg: '#4a2e52' },
                           { id: 'mat-washi', label: '和紙', bg: '#f6f6f3' },
                           { id: 'mat-charcoal', label: '墨', bg: '#1e1d1b' },
                           { id: 'mat-indigo', label: '藍', bg: '#141b24' },
+                          { id: 'mat-kurenai', label: '紅色', bg: '#bc002d' },
                         ] as const
                       ).map((m) => (
                         <button
@@ -481,9 +484,10 @@ export default function App() {
                       className="bg-white border border-[#2a2926]/30 rounded px-2 py-0.5 text-xs text-[#23221f]"
                     >
                       <option value="frame-oak">Antique Oak Wood (古材オーク)</option>
-                      <option value="frame-charcoal">煤竹 (Muted Charcoal)</option>
+                      <option value="frame-susutake">艶消し銀 (Matte Silver)</option>
                       <option value="frame-ebony">黒檀 (Ebony Black)</option>
                       <option value="frame-hinoki">檜木 (Natural Hinoki)</option>
+                      <option value="frame-shunuri">朱塗り (Vermilion Lacquer)</option>
                       <option value="frame-float">浮かし (Minimal Float)</option>
                     </select>
                   </div>
@@ -492,7 +496,7 @@ export default function App() {
                   <div className="flex items-center gap-2">
                     <span className="text-[#6f6d67] font-serif">余白:</span>
                     <div className="flex gap-1">
-                      {(['compact', 'normal', 'wide'] as const).map((p) => (
+                      {(['none', 'compact', 'normal', 'wide'] as const).map((p) => (
                         <button
                           key={p}
                           onClick={() => setMatPadding(p)}
@@ -502,7 +506,7 @@ export default function App() {
                               : 'bg-white border-[#2a2926]/20'
                           }`}
                         >
-                          {p === 'compact' ? '小' : p === 'normal' ? '標準' : '大'}
+                          {p === 'none' ? '無' : p === 'compact' ? '小' : p === 'normal' ? '標準' : '大'}
                         </button>
                       ))}
                     </div>
@@ -519,6 +523,7 @@ export default function App() {
                 matColor={isCuratorMode ? matColor : (currentPhoto.framing?.matColor ?? 'mat-karegane')}
                 frameBorder={isCuratorMode ? frameBorder : (currentPhoto.framing?.frameBorder ?? 'frame-oak')}
                 matPadding={isCuratorMode ? matPadding : (currentPhoto.framing?.matPadding ?? 'normal')}
+                doubleFrameWidth={isCuratorMode ? doubleFrameWidth : (currentPhoto.framing?.doubleFrameWidth ?? false)}
                 showSeamDiagnostic={false}
               />
             </div>
@@ -1097,6 +1102,7 @@ export default function App() {
                       matColor={filteredPhotos[activeSlideIndex].framing?.matColor ?? 'mat-karegane'}
                       frameBorder={filteredPhotos[activeSlideIndex].framing?.frameBorder ?? 'frame-oak'}
                       matPadding={filteredPhotos[activeSlideIndex].framing?.matPadding ?? 'normal'}
+                      doubleFrameWidth={filteredPhotos[activeSlideIndex].framing?.doubleFrameWidth ?? false}
                     />
                   </div>
 
